@@ -1,8 +1,6 @@
 """
 Views for the recipe API
 """
-from django.shortcuts import render
-
 from rest_framework import (  # type: ignore
     viewsets,
     mixins,
@@ -42,7 +40,12 @@ class RecipeViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
-class TagViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class TagViewSet(
+    mixins.DestroyModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.ListModelMixin,
+    viewsets.GenericViewSet,
+):
     """Manage Tags in the DB"""
 
     serializer_class = serializers.TagSerializer
